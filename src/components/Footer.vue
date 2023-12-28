@@ -1,3 +1,5 @@
 <template>
-  <h1>Footer</h1>
+  <div class="p-8 bg-slate-800 ">
+    created by hihihaha
+  </div>
 </template>
