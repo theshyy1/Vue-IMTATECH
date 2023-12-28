@@ -1,0 +1,65 @@
+{
+  "products": [
+    {
+      "id": 1,
+      "name": "HAVIT HV-G92 Gamepad",
+      "oldPrice": 160,
+      "newPrice": 120,
+      "star": 4,
+      "soldQuantity": 88,
+      "image": "https://picsum.photos/271/250",
+      "quantityInStock": 50
+    },
+    {
+      "id": 2,
+      "name": "AK-900 Wired Keyboard",
+      "oldPrice": 1160,
+      "newPrice": 960,
+      "star": 5,
+      "soldQuantity": 75,
+      "image": "https://picsum.photos/272/250",
+      "quantityInStock": 50
+    },
+    {
+      "id": 3,
+      "name": "IPS LCD Gaming Monitor",
+      "oldPrice": 400,
+      "newPrice": 370,
+      "star": 4,
+      "soldQuantity": 99,
+      "image": "https://picsum.photos/273/250",
+      "quantityInStock": 30
+    },
+    {
+      "id": 4,
+      "name": "S-Series Comfort Chair",
+      "oldPrice": 400,
+      "newPrice": 375,
+      "star": 3,
+      "soldQuantity": 88,
+      "image": "https://picsum.photos/274/250",
+      "quantityInStock": 58
+    },
+    {
+      "id": 5,
+      "name": "S-Series Comfort Chair 1",
+      "oldPrice": 333,
+      "newPrice": 300,
+      "star": 2,
+      "soldQuantity": 28,
+      "image": "https://picsum.photos/275/250",
+      "quantityInStock": 47
+    },
+    {
+      "name": "Product C",
+      "newPrice": "200",
+      "quantityInStock": "122",
+      "image": "https://picsum.photos/274/250",
+      "star": 3,
+      "soldQuantity": 0,
+      "oldPrice": 220,
+      "id": 6
+    }
+  ],
+  "users": []
+}
