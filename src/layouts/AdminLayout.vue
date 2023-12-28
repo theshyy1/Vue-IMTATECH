@@ -1,12 +1,14 @@
 <script setup>
 import { RouterView } from "vue-router";
-
-import Footer from "../components/Footer.vue";
-import Header from "../components/Header.vue";
 </script>
 
 <template>
-  <Header></Header>
+  <aside>
+    <ul>
+      <li>Products</li>
+      <li>Users</li>
+    </ul>
+  </aside>
   <transition name="fade" mode="out-in">
     <router-view v-slot="{ Component, route }">
       <KeepAlive>
@@ -16,5 +18,4 @@ import Header from "../components/Header.vue";
       </KeepAlive>
     </router-view>
   </transition>
-  <Footer></Footer>
 </template>
