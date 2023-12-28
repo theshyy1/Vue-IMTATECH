@@ -11,7 +11,7 @@
 
         <p>Giá</p>
 
-        <button>
+        <button class="p-3 mt-4 bg-sky-500 rounded-lg">
           <router-link to="/1/details"> Mua ngay </router-link>
         </button>
       </div>
