@@ -6,7 +6,7 @@ import BaseLayout from "./layouts/BaseLayout.vue";
 <template>
   <div class="">
     <BaseLayout>
-      <h1>Hello world</h1>
+      <router-view></router-view>
     </BaseLayout>
   </div>
 </template>
