@@ -9,8 +9,8 @@ import SidePage from "../view/SidePage.vue";
 <template>
   <div class="bg-slate-100 relative flex flex-col min-h-screen">
     <Header class=" w-full z-20"></Header>
-    <div class="relative flex-grow md:flex md:justify-end">
-      <div class="m-5 md:block hidden bg-slate-50 rounded-md">
+    <div class="relative flex-grow flex ">
+      <div class="m-5 bg-slate-50 fixed rounded-md">
         <SidePage />
       </div>
       <div class="bg-slate-50 m-5 flex-grow w-full md:w-3/4 sm:w-full">
