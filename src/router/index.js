@@ -7,7 +7,6 @@ const routes = [
     component: () => import("../view/HomePage.vue"),
   },
   {
-
     path: "/profile",
     name: "Profile",
     component: () => import("../view/Profile.vue"),
@@ -17,6 +16,7 @@ const routes = [
     name: "Profile Edit",
     component: () => import("../view/EditProfile.vue"),
   },
+  {
     path: "/login",
     name: "Login",
     component: () => import("../view/LoginPage.vue"),
@@ -34,15 +34,15 @@ const routes = [
   {
     path: "/product",
     component: () => import("../components/ProductList.vue"),
-  },  
+  },
   {
     path: "/product/add",
     component: () => import("../components/ProductAdd.vue"),
-  }, 
+  },
   {
     path: "/product/edit/:id",
     component: () => import("../components/ProductEdit.vue"),
-  }, 
+  },
 ];
 
 const router = createRouter({
