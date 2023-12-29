@@ -7,6 +7,16 @@ const routes = [
     component: () => import("../view/HomePage.vue"),
   },
   {
+
+    path: "/profile",
+    name: "Profile",
+    component: () => import("../view/Profile.vue"),
+  },
+  {
+    path: "/profile/:id/edit",
+    name: "Profile Edit",
+    component: () => import("../view/EditProfile.vue"),
+  },
     path: "/login",
     name: "Login",
     component: () => import("../view/LoginPage.vue"),
