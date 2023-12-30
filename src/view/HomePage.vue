@@ -1,8 +1,5 @@
-<script setup>
-  import BaseLayout from '../layouts/BaseLayout.vue';
-</script>
+<script setup></script>
 <template>
-  <BaseLayout>
   <div class="p-3 bg-slate-50">
     <h1>Home Page</h1>
     <div class="grid grid-cols-5 gap-5">
@@ -21,5 +18,4 @@
       </div>
     </div>
   </div>
-</BaseLayout>
 </template>

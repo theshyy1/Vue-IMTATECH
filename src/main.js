@@ -8,13 +8,10 @@ import mainStore from "./api/store";
 import axios from "axios";
 import VueAxios from "vue-axios";
 
-
 const pinia = createPinia();
-const app = createApp(App)
+const app = createApp(App);
 
-app.use(VueAxios,axios)
-app.use(createPinia());
-app.use(mainStore)
-app.use(router)
-app.use(pinia)
+app.use(mainStore);
+app.use(router);
+app.use(pinia);
 app.mount("#app");
