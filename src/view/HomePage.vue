@@ -1,4 +1,5 @@
 
+<script setup></script>
 <template>
   <div class="p-3 bg-slate-50">
     <h1>Home Page</h1>

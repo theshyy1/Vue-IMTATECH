@@ -1,53 +1,100 @@
-import { createRouter, createWebHashHistory } from "vue-router";
+import { createWebHashHistory, createRouter } from "vue-router";
 
 const routes = [
   {
     path: "/",
-    name: "Home",
-    component: () => import("../view/HomePage.vue"),
-  },
-  {
-    path: "/profile",
-    name: "Profile",
-    component: () => import("../view/Profile.vue"),
-  },
-  {
-    path: "/profile/:id/edit",
-    name: "Profile Edit",
-    component: () => import("../view/EditProfile.vue"),
-  },
-  {
-    path: "/login",
-    name: "Login",
-    component: () => import("../view/LoginPage.vue"),
+    name: "BaseLayout",
+    component: () => import("../layouts/BaseLayout.vue"),
+    children: [
+      {
+        path: "/",
+        name: "Home",
+        component: () => import("../view/HomePage.vue"),
+        meta: { title: "Home" },
+      },
+      {
+        path: "products",
+        name: "Home Products",
+        component: () => import("../view/HomePage.vue"),
+        meta: { title: "Home" },
+      },
+      {
+        path: "profile",
+        name: "Profile",
+        component: () => import("../view/Profile.vue"),
+        meta: { title: "Profile" },
+      },
+      {
+        path: "profile/:id/edit",
+        name: "Edit Profile",
+        component: () => import("../view/EditProfile.vue"),
+        meta: { title: "Edit Profile" },
+      },
+      {
+        path: "products/:id",
+        name: "Product Detail",
+        component: () => import("../view/DetailPage.vue"),
+        meta: { title: "Product Detail" },
+      },
+    ],
   },
   {
     path: "/signup",
     name: "Signup",
     component: () => import("../view/SignupPage.vue"),
+    meta: { title: "Sign Up" },
+    hidden: true,
   },
   {
-    path: "/:id/details",
-    name: "Detail",
-    component: () => import("../view/DetailPage.vue"),
+    path: "/signin",
+    name: "Signin",
+    component: () => import("../view/LoginPage.vue"),
+    meta: { title: "Sign In" },
+    hidden: true,
   },
   {
-    path: "/product",
-    component: () => import("../components/ProductList.vue"),
-  },
-  {
-    path: "/product/add",
-    component: () => import("../components/ProductAdd.vue"),
-  },
-  {
-    path: "/product/edit/:id",
-    component: () => import("../components/ProductEdit.vue"),
+    path: "/admin",
+    name: "AdminLayout",
+    component: () => import("../layouts/AdminLayout.vue"),
+    redirect: { name: "Dashboard" },
+    children: [
+      {
+        path: "dashboard",
+        name: "Dashboard",
+        component: () => import("../components/ProductList.vue"),
+        meta: { title: "Dashboard" },
+      },
+      {
+        path: "products",
+        name: "Products",
+        component: () => import("../components/ProductList.vue"),
+        meta: { title: "Product Management" },
+      },
+      {
+        path: "products/create",
+        name: "Create Product",
+        component: () => import("../components/ProductAdd.vue"),
+        meta: { title: "Create Product" },
+      },
+      {
+        path: "products/:id/edit",
+        name: "Edit Product",
+        component: () => import("../components/ProductEdit.vue"),
+        meta: { title: "Edit Product" },
+      },
+    ],
   },
 ];
 
 const router = createRouter({
-  routes,
   history: createWebHashHistory(),
+  routes,
+  scrollBehavior: (to, from, savedPosition) => {
+    if (savedPosition) {
+      return savedPosition;
+    } else {
+      return { top: 0 };
+    }
+  },
 });
-
 export default router;
