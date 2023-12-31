@@ -3,21 +3,33 @@
     <div class="flex gap-5 pb-5">
       <div class="">
         <img
-          src="../assets/vue.svg"
+          :src="getProduct[0]?.image"
           width="250"
           class="ml-10 bg-slate-200 p-1 rounded-md"
           alt=""
         />
       </div>
       <div class="w-1/4 m-5">
-        <h1 class="text-xl font-semibold pt-5">
-          Tên sản phẩm {{ this.idPrd }}
-        </h1>
-        <p class="text-slate-500">Số lượng hàng đã bán / Đánh giá</p>
+        <h1 class="text-xl font-semibold pt-5">{{ getProduct[0]?.name }}</h1>
+        <p class="text-slate-500">
+          Đã bán {{ getProduct[0]?.soldQuantity }} /
+          <span
+            v-if="getProduct[0]?.star !== null && !isNaN(getProduct[0]?.star)"
+          >
+            {{ Math.ceil(getProduct[0]?.star)
+            }}<template v-for="i in Math.min(parseInt(getProduct[0]?.star), 5)">
+              ⭐️
+            </template>
+          </span>
+          <span v-else>No rating</span>
+        </p>
         <ul class="leading-[50px] text-3xl">
-          <li>Giá</li>
-          <li>Số hàng tồn kho</li>
-          <li></li>
+          <li class="font-bold">
+            <span class="line-through text-sm font-extralight"
+              >${{ getProduct[0]?.oldPrice }}
+            </span>
+            ${{ getProduct[0]?.newPrice }}
+          </li>
         </ul>
       </div>
       <div class="mx-auto flex flex-col justify-end">
@@ -55,7 +67,7 @@
             <p>Giá</p>
 
             <button class="p-3 mt-4 bg-sky-500 rounded-lg">
-              <router-link to="/1/details"> Mua ngay </router-link>
+              <router-link to="/products/1"> Mua ngay </router-link>
             </button>
           </div>
         </div>
@@ -65,16 +77,15 @@
 </template>
 
 <script>
+import { mapGetters } from "vuex";
 export default {
-  data() {
-    return {
-      idPrd: "",
-    };
+  computed: {
+    ...mapGetters(["getProduct"]),
   },
+
   mounted() {
-    // Lấy tham số từ path
-    this.idPrd = this.$route.params.id;
-    console.log(this.idPrd); // In ra giá trị của userId từ đường dẫn
+    const id = this.$route.params.id;
+    this.$store.dispatch("getOnePrd", id);
   },
 };
 </script>

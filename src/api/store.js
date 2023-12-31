@@ -4,10 +4,15 @@ import axios from "axios";
 const mainStore = createStore({
   state: {
     products: [],
+    product: [],
+    filtedbyStar: []
   },
   mutations: {
     setProduct(state, product) {
       state.products = product;
+    },
+    getOne(state, product) {
+      state.product = [product];
     },
     addProduct(state, product) {
       let id = state.products.lenght + 1;
@@ -17,7 +22,7 @@ const mainStore = createStore({
     deleteProduct(state, id) {
       state.products = state.products.filter((item) => item.id !== id);
     },
-
+    
     updateProduct(state, product) {
       state.product.forEach((item, i) => {
         if (item.id === product.id) {
@@ -30,6 +35,9 @@ const mainStore = createStore({
     getProduct: (state) => {
       return state.products;
     },
+    getOne: (state) => {
+      return state.product;
+    },
   },
   actions: {
     async fetchProduct({ commit }) {
@@ -39,6 +47,12 @@ const mainStore = createStore({
       } catch (error) {
         console.log(error);
       }
+    },
+    async getOnePrd({ commit }, id) {
+      try {
+        const data = await axios.get(`http://localhost:3000/products/${id}`);
+        commit("getOne", data.data);
+      } catch (error) {}
     },
     async deleteProduct({ commit }, id) {
       try {
