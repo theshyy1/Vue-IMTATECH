@@ -5,8 +5,7 @@ import App from "./App.vue";
 import { createPinia } from "pinia";
 import router from "./router";
 import mainStore from "./api/store";
-import axios from "axios";
-import VueAxios from "vue-axios";
+import "vue3-toastify/dist/index.css";
 
 const pinia = createPinia();
 const app = createApp(App);

@@ -3,21 +3,28 @@
     <div class="flex gap-5 pb-5">
       <div class="">
         <img
-          :src="getProduct[0]?.image"
+          :src="currentProduct[0]?.image"
           width="250"
           class="ml-10 bg-slate-200 p-1 rounded-md"
           alt=""
         />
       </div>
       <div class="w-1/4 m-5">
-        <h1 class="text-xl font-semibold pt-5">{{ getProduct[0]?.name }}</h1>
+        <h1 class="text-xl font-semibold pt-5">
+          {{ currentProduct[0]?.name }}
+        </h1>
         <p class="text-slate-500">
-          Đã bán {{ getProduct[0]?.soldQuantity }} /
+          Đã bán {{ currentProduct[0]?.soldQuantity }} /
           <span
-            v-if="getProduct[0]?.star !== null && !isNaN(getProduct[0]?.star)"
+            v-if="
+              currentProduct[0]?.star !== null &&
+              !isNaN(currentProduct[0]?.star)
+            "
           >
-            {{ Math.ceil(getProduct[0]?.star)
-            }}<template v-for="i in Math.min(parseInt(getProduct[0]?.star), 5)">
+            {{ Math.ceil(currentProduct[0]?.star)
+            }}<template
+              v-for="i in Math.min(parseInt(currentProduct[0]?.star), 5)"
+            >
               ⭐️
             </template>
           </span>
@@ -26,9 +33,9 @@
         <ul class="leading-[50px] text-3xl">
           <li class="font-bold">
             <span class="line-through text-sm font-extralight"
-              >${{ getProduct[0]?.oldPrice }}
+              >${{ currentProduct[0]?.oldPrice }}
             </span>
-            ${{ getProduct[0]?.newPrice }}
+            ${{ currentProduct[0]?.newPrice }}
           </li>
         </ul>
       </div>
@@ -76,18 +83,19 @@
   </div>
 </template>
 
-<script>
-import { mapGetters } from "vuex";
-export default {
-  computed: {
-    ...mapGetters(["getProduct"]),
-  },
+<script setup>
+import { onMounted, ref } from "vue";
+import { getProductApi } from "../api/https";
+import { useRoute } from "vue-router";
 
-  mounted() {
-    const id = this.$route.params.id;
-    this.$store.dispatch("getOnePrd", id);
-  },
-};
+const route = useRoute();
+const currentProduct = ref(null);
+
+onMounted(() =>
+  getProductApi(route.params.id).then(
+    ({ data }) => (currentProduct.value = data)
+  )
+);
 </script>
 
 <style>

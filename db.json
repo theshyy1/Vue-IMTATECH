@@ -61,5 +61,23 @@
       "id": 6
     }
   ],
-  "users": []
+  "users": [
+    {
+      "email": "trung@gmail.com",
+      "password": "$2a$10$esyLvsusXkevnKxLIiYdfePerV1Xhj.CogLtLZJSGNY4Yuf5Yy5de",
+      "name": "Hoang Trung",
+      "phone": "033",
+      "id": 1,
+      "cart": []
+    },
+    {
+      "email": "thanh@gmail.com",
+      "password": "$2a$10$L8u30tBz0gBTe0ToSSBfr.Z7SnkUfuFKYytCFeB6bVMgLJ57ESeOS",
+      "name": "Bui Thanh",
+      "phone": "03333",
+      "admin": false,
+      "id": 2,
+      "cart": []
+    }
+  ]
 }

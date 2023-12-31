@@ -1,27 +1,22 @@
+<script setup>
+import { computed, onMounted } from "vue";
+import useProductStore from "../store/products";
 
-<script >
-import { mapActions, mapGetters } from "vuex";
-export default {
-  computed: {
-    ...mapGetters(["getProduct"]),
-    products() {
-      return this.getProduct;
-    },
-  },
+const store = useProductStore();
 
-  mounted() {
-    this.$store.dispatch("fetchProduct");
-  },
-};
+onMounted(() => store.getProducts());
+const products = computed(() => store.allProducts);
 </script>
 <template>
   <div class="p-3 bg-slate-50">
     <h1>Home Page</h1>
-    <div class="grid grid-cols-5 gap-5">
+    <div class="grid grid-cols-4 gap-3">
       <div v-for="item in products" :key="item.id">
-        <img :src="item.image" width="200" alt="" />
+        <router-link :to="`/products/${item.id}`">
+          <img :src="item.image" width="200" alt="" />
+        </router-link>
 
-        <p class="text-2xl mt-2">{{ item.name }}</p>
+        <p class="text-base mt-2">{{ item.name }}</p>
 
         <span v-if="item?.star !== null && !isNaN(item?.star)">
           {{ item.soldQuantity }} / {{ Math.ceil(item?.star) }}
@@ -31,14 +26,16 @@ export default {
         </span>
         <span v-else>No rating</span>
 
-        <p class="text-[16px] font-semibold text-center">
+        <p class="text-[16px] font-semibold">
           <span class="line-through text-sm font-thin"
             >${{ item.oldPrice }}</span
           >
           / ${{ item.newPrice }}
         </p>
 
-        <button class="p-3 mt-4 bg-sky-500 rounded-lg">
+        <button
+          class="p-3 mt-4 bg-sky-500 rounded-lg text-white hover:opacity-60"
+        >
           <router-link :to="'products/' + item.id"> Mua ngay </router-link>
         </button>
       </div>

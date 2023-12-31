@@ -1,3 +1,35 @@
+<script setup>
+import { reactive, toDisplayString } from "vue";
+import useAuthStore from "../store/auth";
+import { useRouter } from "vue-router";
+import { toast } from "vue3-toastify";
+
+const authStore = useAuthStore();
+const router = useRouter();
+
+const { login } = authStore;
+
+const userLogin = reactive({
+  email: "",
+  password: "",
+});
+
+const handleSubmit = async () => {
+  const res = await login(userLogin);
+  console.log(res);
+  if (res.admin === true) {
+    await router.push("/admin");
+  } else {
+    await router.push("/");
+  }
+  toast.success("Login successful", {
+    autoClose: 1500,
+    position: "top-center",
+    theme: "colored",
+  });
+};
+</script>
+
 <template>
   <div
     class="page-bg w-full h-[919px] bg-[url('../../public/images/login-bg.jpg')] bg-no-repeat bg-cover bg-center flex justify-center items-center"
@@ -9,7 +41,10 @@
         class="form-bg basis-4/6 flex flex-col items-center justify-center gap-2"
       >
         <h1 class="title font-bold text-[28px]">Login</h1>
-        <form class="login-form h-64 w-[280px] flex flex-col">
+        <form
+          class="login-form h-64 w-[280px] flex flex-col"
+          @submit.prevent="handleSubmit"
+        >
           <div class="username-form basis-2/5 flex flex-col relative pt-4">
             <label for="" class="username-label">Username</label>
             <svg
@@ -29,6 +64,7 @@
             <input
               placeholder="Type your username"
               type="text"
+              v-model="userLogin.email"
               class="username-inp h-14 border-b-2 border-gray-300 outline-none caret-gray-400 pl-9 pb-2"
             />
           </div>
@@ -51,6 +87,7 @@
             <input
               placeholder="Type your password"
               type="password"
+              v-model="userLogin.password"
               class="password-inp h-14 border-b-2 border-gray-300 outline-none caret-gray-400 pl-9 pb-2"
             />
           </div>

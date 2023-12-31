@@ -1,3 +1,33 @@
+<script setup>
+import { reactive } from "vue";
+import useAuthStore from "../store/auth";
+import { useRouter } from "vue-router";
+import { register } from "../api/https";
+
+const authStore = useAuthStore();
+const router = useRouter();
+
+const { login } = authStore;
+
+const userLogin = reactive({
+  name: "",
+  email: "",
+  password: "",
+  phone: "",
+  admin: false,
+});
+
+const handleSubmit = async () => {
+  const res = await register(userLogin);
+  console.log(res);
+  // if (res.role === "1") {
+  //   await router.push("/");
+  // } else {
+  //   await router.push("/admin");
+  // }
+};
+</script>
+
 <template>
   <div
     class="page-bg w-full h-[919px] bg-[url('../../public/images/login-bg.jpg')] bg-no-repeat bg-cover bg-center flex justify-center items-center"
@@ -9,7 +39,10 @@
         class="form-bg h-[500px] flex flex-col justify-start items-center mt-9"
       >
         <h1 class="title font-bold text-[28px]">Signup</h1>
-        <form class="login-form flex flex-col mt-3 w-[280px] h-max grow">
+        <form
+          class="login-form flex flex-col mt-3 w-[280px] h-max grow"
+          @submit.prevent="handleSubmit"
+        >
           <div class="flex flex-col relative">
             <label for="" class="username-label">Username</label>
             <svg
@@ -29,6 +62,7 @@
             <input
               placeholder="Type your username"
               type="text"
+              v-model="userLogin.name"
               class="username-inp h-14 w-full border-b-2 border-gray-300 outline-none caret-gray-400 pl-9 pb-2"
             />
           </div>
@@ -51,6 +85,7 @@
             <input
               placeholder="Type your email address"
               type="text"
+              v-model="userLogin.email"
               class="username-inp h-14 w-full border-b-2 border-gray-300 outline-none caret-gray-400 pl-9 pb-2"
             />
           </div>
@@ -73,6 +108,7 @@
             <input
               placeholder="Type your phone number"
               type="text"
+              v-model="userLogin.phone"
               class="username-inp h-14 w-full border-b-2 border-gray-300 outline-none caret-gray-400 pl-9 pb-2"
             />
           </div>
@@ -95,6 +131,7 @@
             <input
               placeholder="Type your password"
               type="password"
+              v-model="userLogin.password"
               class="username-inp h-14 w-full border-b-2 border-gray-300 outline-none caret-gray-400 pl-9 pb-2"
             />
           </div>
