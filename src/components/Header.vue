@@ -1,3 +1,19 @@
+<script setup>
+import { reactive, ref } from "vue";
+import { RouterLink, RouterView } from "vue-router";
+import useProductStore from "../store/products";
+import useAuthStore from "../store/auth";
+const { userState } = useAuthStore();
+
+const searchText = ref("");
+const store = useProductStore();
+const handleSubmit = async () => {
+  await store.searchProducts(searchText.value).then(() => {
+    searchText.value = "";
+  });
+};
+</script>
+
 <template>
   <div class="p-3 bg-slate-50 flex items-center gap-10">
     <router-link to="/">
@@ -25,21 +41,24 @@
           ></path>
         </svg>
       </span>
-      <input
-        class="placeholder:italic w-5/6 placeholder:text-slate-400 block bg-white border border-slate-300 rounded-md py-3 pl-9 pr-3 shadow-sm focus:outline-none focus:border-sky-500 focus:ring-sky-500 focus:ring-1 sm:text-sm"
-        placeholder="Search for anything..."
-        type="text"
-        name="search"
-      />
+      <form action="" @submit.prevent="handleSubmit">
+        <input
+          class="placeholder:italic w-5/6 placeholder:text-slate-400 block bg-white border border-slate-300 rounded-md py-3 pl-9 pr-3 shadow-sm focus:outline-none focus:border-sky-500 focus:ring-sky-500 focus:ring-1 sm:text-sm"
+          placeholder="Search for anything..."
+          type="text"
+          name="search"
+          v-model="searchText"
+        />
 
-      <button
-        class="absolute right-[16%] inset-y-0 before:border-[1px] before:border-gray-500 before:mr-2 hover:bg-cyan-500 hover:text-white after:mx-2 rounded-r-md"
-      >
-        Tìm kiếm
-      </button>
+        <button
+          class="absolute right-[16%] inset-y-0 before:border-[1px] before:border-gray-500 before:mr-2 hover:bg-cyan-500 hover:text-white after:mx-2 rounded-r-md"
+        >
+          Tìm kiếm
+        </button>
+      </form>
     </label>
     <div class="flex-none flex gap-5">
-      <router-link to="/cart">
+      <RouterLink to="/cart">
         <button class="bg-slate-400 p-4 rounded-lg text-white">
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -53,7 +72,7 @@
           </svg>
           Giỏ hàng
         </button>
-      </router-link>
+      </RouterLink>
       <button class="p-4 bg-cyan-500 text-white rounded-lg">
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -65,12 +84,13 @@
             d="M224 256A128 128 0 1 0 224 0a128 128 0 1 0 0 256zm-45.7 48C79.8 304 0 383.8 0 482.3C0 498.7 13.3 512 29.7 512H418.3c16.4 0 29.7-13.3 29.7-29.7C448 383.8 368.2 304 269.7 304H178.3z"
           />
         </svg>
-        <router-link to="/">Đăng nhập</router-link>
+
+        <p v-if="userState.isLoggin">
+          Hello,
+          <RouterLink to="/profile">{{ userState.user.name }}</RouterLink>
+        </p>
+        <RouterLink v-else to="/">Đăng nhập</RouterLink>
       </button>
     </div>
   </div>
 </template>
-
-<script setup>
-import { RouterView } from "vue-router";
-</script>

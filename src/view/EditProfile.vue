@@ -1,24 +1,21 @@
 <script setup>
 import { computed, ref } from "vue";
 import { useRouter } from "vue-router";
+import useAuthStore from "../store/auth";
+import { updateUserAPI } from "../api/https";
+import { toast } from "vue3-toastify";
 
 const router = useRouter();
 
-const user = ref({
-  id: 1,
-  name: "Nguyen Van A",
-  birthDay: "18/02/1999",
-  gender: "Male",
-  avatar: "https://picsum.photos/150/150",
-  phone: "0123456789",
-  email: "hoangtrung@gmail.com",
-  address: "Ha Noi, Viet Nam",
-});
+const {
+  userState: { user },
+} = useAuthStore();
 
 const handleSave = async (event) => {
   event.preventDefault();
-  //   await updateUserAPI(user);
-  router.push({ path: "/profile" });
+  await updateUserAPI(user);
+  await router.push({ path: "/profile" });
+  toast.success("Updated profile");
 };
 </script>
 

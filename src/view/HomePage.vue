@@ -1,38 +1,47 @@
 <script setup>
-import { computed, onMounted } from "vue";
+import { computed, onMounted, onUnmounted, ref } from "vue";
+import { getProductsApi } from "../api/https";
 import useProductStore from "../store/products";
-
 const store = useProductStore();
 
-onMounted(() => store.getProducts());
-const products = computed(() => store.allProducts);
+onMounted(() => {
+  store.getProducts();
+});
+
+onUnmounted(() => {
+  store.searchList = [];
+});
+
+const products = computed(() => {
+  if (store.searchList.length > 0) {
+    return store.searchList;
+  } else {
+    return store.allProducts;
+  }
+});
 </script>
 <template>
   <div class="p-3 bg-slate-50">
     <h1>Home Page</h1>
     <div class="grid grid-cols-4 gap-3">
-      <div v-for="item in products" :key="item.id">
+      <div v-for="item in products" class="mb-4" :key="item.id">
         <router-link :to="`/products/${item.id}`">
           <img :src="item.image" width="200" alt="" />
         </router-link>
 
         <p class="text-base mt-2">{{ item.name }}</p>
 
-        <span v-if="item?.star !== null && !isNaN(item?.star)">
-          {{ item.soldQuantity }} / {{ Math.ceil(item?.star) }}
-          <ul>
-            <template v-for="index in 5">
-              <i
-                v-if="index <= item.star"
-                key="index"
-                class="fa-solid fa-star text-red-600"
-              ></i>
-              <i v-else class="fa-regular fa-star"></i>
-            </template>
-            <span>({{ item.soldQuantity }})</span>
-          </ul>
-        </span>
-        <span v-else>No rating</span>
+        <ul>
+          <template v-for="index in 5">
+            <i
+              v-if="index <= item.star"
+              key="index"
+              class="fa-solid fa-star text-red-600"
+            ></i>
+            <i v-else class="fa-regular fa-star"></i>
+          </template>
+          <span>({{ item.soldQuantity }})</span>
+        </ul>
 
         <p class="text-[16px] font-semibold">
           <span class="line-through text-sm font-thin"

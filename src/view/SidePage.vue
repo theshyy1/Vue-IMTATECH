@@ -9,18 +9,11 @@
   </div>
 </template>
 
-<script>
-import { mapActions, mapGetters } from "vuex";
-export default {
-  computed: {
-    ...mapGetters(["getProduct"]),
-    products() {
-      return this.getProduct;
-    },
-  },
+<script setup>
+import { computed, onMounted } from "vue";
+import useProductStore from "../store/products";
 
-  mounted() {
-    this.$store.dispatch("fetchProduct");
-  },
-};
+const store = useProductStore();
+onMounted(() => store.getProducts());
+const products = computed(() => store.allProducts);
 </script>
