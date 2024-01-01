@@ -9,15 +9,15 @@ const routes = [
     children: [
       {
         path: "/",
-        name: "Home",
+        name: "Home Products",
         component: () => import("../view/HomePage.vue"),
         meta: { title: "Home" },
       },
       {
-        path: "products",
-        name: "Home Products",
+        path: "/search",
+        name: "Search",
         component: () => import("../view/HomePage.vue"),
-        meta: { title: "Home" },
+        meta: { title: "Search" },
       },
       {
         path: "/cart",

@@ -16,7 +16,7 @@ const handleSubmit = async () => {
 
 <template>
   <div class="p-3 bg-slate-50 flex items-center gap-10">
-    <router-link to="/">
+    <RouterLink to="/">
       <div>
         <img
           src="../assets/tiki-corporation-logo.png"
@@ -25,7 +25,7 @@ const handleSubmit = async () => {
           alt=""
         />
       </div>
-    </router-link>
+    </RouterLink>
     <label class="relative block grow ml-32">
       <span class="absolute inset-y-0 left-0 flex items-center pl-2">
         <svg
@@ -47,7 +47,8 @@ const handleSubmit = async () => {
           placeholder="Search for anything..."
           type="text"
           name="search"
-          v-model="searchText"
+          v-model="store.title"
+          autocomplete="off"
         />
 
         <button
