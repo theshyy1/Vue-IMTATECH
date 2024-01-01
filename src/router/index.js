@@ -96,6 +96,12 @@ const routes = [
         component: () => import("../view/Admin/ProductEdit.vue"),
         meta: { title: "Edit Product" },
       },
+      {
+        path: "users",
+        name: "Manage users",
+        component: () => import("../view/Admin/UsersManager.vue"),
+        meta: { title: "Edit Product" },
+      },
     ],
   },
 ];

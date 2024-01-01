@@ -1,42 +1,4 @@
-<<<<<<< HEAD
-<template>
-  <div class="cart">
-    <h2 class="text-xl font-bold">Giỏ hàng</h2>
-    <table class="cart-items">
-      <thead>
-        <tr>
-          <th>Sản phẩm</th>
-          <th>Giá</th>
-          <th>Số lượng</th>
-          <th></th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr class="cart-item">
-          <td>
-            <img src="" alt="Ảnh nè" />
-            <span>Tên sản phẩm</span>
-          </td>
-          <td>$50</td>
-          <td>
-            <input type="number" value="2" />
-          </td>
-          <td>
-            <button class="remove-btn bg-red-500 text-white p-3 rounded-md">
-              Xóa
-            </button>
-          </td>
-        </tr>
-      </tbody>
-    </table>
-    <div class="cart-summary">
-      <p>Tổng tiền: $100</p>
-      <button class="checkout-btn">Thanh toán</button>
-    </div>
-  </div>
-</template>
-
-<style scoped>
+<style>
 .cart {
   border: 1px solid #ccc;
   border-radius: 5px;
@@ -290,4 +252,4 @@ const removeItem = async (product) => {
     </div>
   </div>
 </template>
->>>>>>> e9db97252acac3301b34b8cbb2fad217d1a71b95
+

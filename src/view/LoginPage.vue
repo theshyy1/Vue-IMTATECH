@@ -16,7 +16,16 @@ const userLogin = reactive({
 
 const handleSubmit = async () => {
   const res = await login(userLogin);
-  console.log(res);
+  console.log("response: ",res);
+  
+  if(res.user.status===false){
+    toast.warn("Your account is not active! Please contact admin",{
+      autoClose: 3500,
+    position: "top-center",
+    theme: "colored",
+    });
+    return;
+  }
   if (res.admin === true) {
     await router.push("/admin");
   } else {

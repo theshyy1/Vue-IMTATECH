@@ -14,6 +14,7 @@ const userLogin = reactive({
   email: "",
   password: "",
   phone: "",
+  status: true,
   admin: false,
 });
 
