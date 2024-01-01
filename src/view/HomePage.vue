@@ -1,11 +1,24 @@
 <script setup>
-import { computed, onMounted } from "vue";
+import { computed, onMounted, onUnmounted, ref } from "vue";
+import { getProductsApi } from "../api/https";
 import useProductStore from "../store/products";
-
 const store = useProductStore();
 
-onMounted(() => store.getProducts());
-const products = computed(() => store.allProducts);
+onMounted(() => {
+  store.getProducts();
+});
+
+onUnmounted(() => {
+  store.searchList = [];
+});
+
+const products = computed(() => {
+  if (store.searchList.length > 0) {
+    return store.searchList;
+  } else {
+    return store.allProducts;
+  }
+});
 </script>
 <template>
   <div class="p-3 bg-slate-50">
