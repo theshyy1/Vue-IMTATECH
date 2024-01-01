@@ -6,7 +6,6 @@ import { useRouter } from "vue-router";
 const store = useProductStore();
 onMounted(() => {
   store.getProducts();
- 
 });
 
 onUnmounted(() => {
