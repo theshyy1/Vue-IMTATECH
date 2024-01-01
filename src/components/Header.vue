@@ -31,7 +31,8 @@
           placeholder="Search for anything..."
           type="text"
           name="search"
-          v-model="searchText"
+          v-model="store.title"
+          autocomplete="off"
         />
 
         <button
@@ -76,14 +77,18 @@
 
 <script setup>
 import { reactive, ref } from "vue";
-import { RouterView } from "vue-router";
+import { RouterView, useRouter } from "vue-router";
 import useProductStore from "../store/products";
 
-const searchText = ref("");
 const store = useProductStore();
+const router = useRouter();
 const handleSubmit = async () => {
-  await store.searchProducts(searchText.value).then(() => {
-    searchText.value = "";
+  router.push({
+    path: `/search`,
+    name: "Search",
+  });
+  await store.searchProducts(store.title).then(() => {
+    store.title = "";
   });
 };
 </script>

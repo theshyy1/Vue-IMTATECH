@@ -2,10 +2,11 @@
 import { computed, onMounted, onUnmounted, ref } from "vue";
 import { getProductsApi } from "../api/https";
 import useProductStore from "../store/products";
+import { useRouter } from "vue-router";
 const store = useProductStore();
-
 onMounted(() => {
   store.getProducts();
+ 
 });
 
 onUnmounted(() => {
