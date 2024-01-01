@@ -1,7 +1,13 @@
 import axios from "axios";
 import { instance } from "./api";
 
-export const getProductsApi = () => instance.get("/products");
+export const getProductsApi = (title) => {
+  if (title) {
+    return instance.get(`/products?q=${title}`);
+  } else {
+    return instance.get(`/products`);
+  }
+};
 
 export const getProductApi = (id) => instance.get(`/products/${id}`);
 

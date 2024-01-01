@@ -3,7 +3,7 @@
     <div class="flex gap-5 pb-5">
       <div class="">
         <img
-          :src="currentProduct[0]?.image"
+          :src="currentProduct?.image"
           width="250"
           class="ml-10 bg-slate-200 p-1 rounded-md"
           alt=""
@@ -11,19 +11,16 @@
       </div>
       <div class="w-1/4 m-5">
         <h1 class="text-xl font-semibold pt-5">
-          {{ currentProduct[0]?.name }}
+          {{ currentProduct?.name }}
         </h1>
         <p class="text-slate-500">
-          Đã bán {{ currentProduct[0]?.soldQuantity }} /
+          Đã bán {{ currentProduct?.soldQuantity }} /
           <span
-            v-if="
-              currentProduct[0]?.star !== null &&
-              !isNaN(currentProduct[0]?.star)
-            "
+            v-if="currentProduct?.star !== null && !isNaN(currentProduct?.star)"
           >
-            {{ Math.ceil(currentProduct[0]?.star)
+            {{ Math.ceil(currentProduct?.star)
             }}<template
-              v-for="i in Math.min(parseInt(currentProduct[0]?.star), 5)"
+              v-for="i in Math.min(parseInt(currentProduct?.star), 5)"
             >
               ⭐️
             </template>
@@ -33,9 +30,9 @@
         <ul class="leading-[50px] text-3xl">
           <li class="font-bold">
             <span class="line-through text-sm font-extralight"
-              >${{ currentProduct[0]?.oldPrice }}
+              >${{ currentProduct?.oldPrice }}
             </span>
-            ${{ currentProduct[0]?.newPrice }}
+            ${{ currentProduct?.newPrice }}
           </li>
         </ul>
       </div>

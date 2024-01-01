@@ -36,6 +36,19 @@ const routes = [
         component: () => import("../view/DetailPage.vue"),
         meta: { title: "Product Detail" },
       },
+      {
+        path: "/cart",
+        name: "Cart",
+        component: () => import("../view/Cart.vue"),
+        meta: { title: "Cart" },
+        hidden: true,
+      },
+      {
+        path: "/cart",
+        name: "Cart",
+        component: () => import("../view/Cart.vue"),
+        meta: { title: "Cart" },
+      },
     ],
   },
   {
@@ -52,6 +65,7 @@ const routes = [
     meta: { title: "Sign In" },
     hidden: true,
   },
+
   {
     path: "/admin",
     name: "AdminLayout",

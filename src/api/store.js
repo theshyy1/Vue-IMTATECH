@@ -5,7 +5,6 @@ const mainStore = createStore({
   state: {
     products: [],
     product: [],
-    filtedbyStar: []
   },
   mutations: {
     setProduct(state, product) {
@@ -13,6 +12,9 @@ const mainStore = createStore({
     },
     getOne(state, product) {
       state.product = [product];
+    },
+    searchProduct(state, product) {
+      state.products = [product];
     },
     addProduct(state, product) {
       let id = state.products.lenght + 1;
@@ -22,7 +24,7 @@ const mainStore = createStore({
     deleteProduct(state, id) {
       state.products = state.products.filter((item) => item.id !== id);
     },
-    
+
     updateProduct(state, product) {
       state.product.forEach((item, i) => {
         if (item.id === product.id) {
@@ -40,9 +42,11 @@ const mainStore = createStore({
     },
   },
   actions: {
-    async fetchProduct({ commit }) {
+    async fetchProduct({ commit }, title) {
       try {
-        const data = await axios.get(`http://localhost:3000/products`);
+        const data = await axios.get(
+          `http://localhost:3000/products?q=${title}`
+        );
         commit("setProduct", data.data);
       } catch (error) {
         console.log(error);

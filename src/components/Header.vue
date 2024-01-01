@@ -25,18 +25,21 @@
           ></path>
         </svg>
       </span>
-      <input
-        class="placeholder:italic w-5/6 placeholder:text-slate-400 block bg-white border border-slate-300 rounded-md py-3 pl-9 pr-3 shadow-sm focus:outline-none focus:border-sky-500 focus:ring-sky-500 focus:ring-1 sm:text-sm"
-        placeholder="Search for anything..."
-        type="text"
-        name="search"
-      />
+      <form action="" @submit.prevent="handleSubmit">
+        <input
+          class="placeholder:italic w-5/6 placeholder:text-slate-400 block bg-white border border-slate-300 rounded-md py-3 pl-9 pr-3 shadow-sm focus:outline-none focus:border-sky-500 focus:ring-sky-500 focus:ring-1 sm:text-sm"
+          placeholder="Search for anything..."
+          type="text"
+          name="search"
+          v-model="searchText"
+        />
 
-      <button
-        class="absolute right-[16%] inset-y-0 before:border-[1px] before:border-gray-500 before:mr-2 hover:bg-cyan-500 hover:text-white after:mx-2 rounded-r-md"
-      >
-        Tìm kiếm
-      </button>
+        <button
+          class="absolute right-[16%] inset-y-0 before:border-[1px] before:border-gray-500 before:mr-2 hover:bg-cyan-500 hover:text-white after:mx-2 rounded-r-md"
+        >
+          Tìm kiếm
+        </button>
+      </form>
     </label>
     <div class="flex-none flex gap-5">
       <router-link to="/cart">
@@ -72,5 +75,15 @@
 </template>
 
 <script setup>
+import { reactive, ref } from "vue";
 import { RouterView } from "vue-router";
+import useProductStore from "../store/products";
+
+const searchText = ref("");
+const store = useProductStore();
+const handleSubmit = async () => {
+  await store.searchProducts(searchText.value).then(() => {
+    searchText.value = "";
+  });
+};
 </script>
