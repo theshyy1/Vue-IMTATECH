@@ -41,10 +41,7 @@
       </div>
       <div class="mx-auto flex flex-col justify-end">
         <div class="number-input">
-          <button
-            onclick="this.parentNode.querySelector('input[type=number]').stepDown()"
-            class="minus"
-          ></button>
+          <button class="minus"></button>
           <input
             class="quantity"
             min="0"
@@ -52,10 +49,7 @@
             value="1"
             type="number"
           />
-          <button
-            onclick="this.parentNode.querySelector('input[type=number]').stepUp()"
-            class="plus"
-          ></button>
+          <button class="plus"></button>
         </div>
         <button class="p-3 bg-sky-500">Mua ngay</button>
       </div>
