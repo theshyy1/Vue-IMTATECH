@@ -20,9 +20,17 @@ const products = computed(() => store.allProducts);
 
         <span v-if="item?.star !== null && !isNaN(item?.star)">
           {{ item.soldQuantity }} / {{ Math.ceil(item?.star) }}
-          <template v-for="i in Math.min(parseInt(item?.star), 5)">
-            ⭐️
-          </template>
+          <ul>
+            <template v-for="index in 5">
+              <i
+                v-if="index <= item.star"
+                key="index"
+                class="fa-solid fa-star text-red-600"
+              ></i>
+              <i v-else class="fa-regular fa-star"></i>
+            </template>
+            <span>({{ item.soldQuantity }})</span>
+          </ul>
         </span>
         <span v-else>No rating</span>
 
