@@ -1,8 +1,8 @@
 <script setup>
 import { computed, onMounted, onUnmounted, ref } from "vue";
-import { getProductsApi } from "../api/https";
 import useProductStore from "../store/products";
-import { useRouter } from "vue-router";
+import { RouterLink, useRouter } from "vue-router";
+
 const store = useProductStore();
 onMounted(() => {
   store.getProducts();
@@ -25,9 +25,9 @@ const products = computed(() => {
     <h1>Home Page</h1>
     <div class="grid grid-cols-4 gap-3">
       <div v-for="item in products" class="mb-4" :key="item.id">
-        <router-link :to="`/products/${item.id}`">
+        <RouterLink :to="`/products/${item.id}`">
           <img :src="item.image" width="200" alt="" />
-        </router-link>
+        </RouterLink>
 
         <p class="text-base mt-2">{{ item.name }}</p>
 
@@ -53,7 +53,7 @@ const products = computed(() => {
         <button
           class="p-3 mt-4 bg-sky-500 rounded-lg text-white hover:opacity-60"
         >
-          <router-link :to="'products/' + item.id"> Mua ngay </router-link>
+          <RouterLink :to="'products/' + item.id"> Mua ngay </RouterLink>
         </button>
       </div>
     </div>
