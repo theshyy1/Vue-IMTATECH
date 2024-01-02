@@ -86,6 +86,7 @@ const handleSubmit = async () => {
   router.push({
     path: `/search`,
     name: "Search",
+    query: { q: store.title },
   });
   await store.searchProducts(store.title).then(() => {
     store.title = "";
