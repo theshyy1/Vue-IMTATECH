@@ -1,14 +1,10 @@
 <script setup>
 import { RouterView } from "vue-router";
-import BaseLayout from "./layouts/BaseLayout.vue";
-</script>
 
+</script>
 <template>
   <div class="">
-    <BaseLayout>
-      <router-view></router-view>
-    </BaseLayout>
+    <router-view></router-view>
   </div>
 </template>
-
 <style scoped></style>

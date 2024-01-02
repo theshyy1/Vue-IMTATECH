@@ -61,5 +61,34 @@
       "id": 6
     }
   ],
-  "users": []
+  "users": [
+    {
+      "email": "trung@gmail.com",
+      "password": "$2a$10$C/Pe5BbLbx3rcntQg6SGfu211eZSvmLeLFyufiZ2jlEEJKsVPSvzG",
+      "name": "Hoang Trung",
+      "phone": "033",
+      "status": true,
+      "id": 1,
+      "cart": []
+    },
+    {
+      "email": "thanh@gmail.com",
+      "password": "$2a$10$L8u30tBz0gBTe0ToSSBfr.Z7SnkUfuFKYytCFeB6bVMgLJ57ESeOS",
+      "name": "Bui Thanh",
+      "phone": "03333",
+      "status": true,
+      "admin": false,
+      "id": 2,
+      "cart": []
+    },
+    {
+      "email": "phi@gmail.com",
+      "password": "$2a$10$WsrNBV2fOs1N.CVb/Apgn.jq12Q7SEwQSY8yBUh4gcsFV5jy7isKu",
+      "name": "phi",
+      "phone": "123",
+      "status": false,
+      "admin": false,
+      "id": 3
+    }
+  ]
 }

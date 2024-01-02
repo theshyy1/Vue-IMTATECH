@@ -3,7 +3,7 @@
     <div class="flex gap-5 pb-5">
       <div class="">
         <img
-          src="../assets/vue.svg"
+          :src="currentProduct?.image"
           width="250"
           class="ml-10 bg-slate-200 p-1 rounded-md"
           alt=""
@@ -11,21 +11,34 @@
       </div>
       <div class="w-1/4 m-5">
         <h1 class="text-xl font-semibold pt-5">
-          Tên sản phẩm {{ this.idPrd }}
+          {{ currentProduct?.name }}
         </h1>
-        <p class="text-slate-500">Số lượng hàng đã bán / Đánh giá</p>
+        <p class="text-slate-500">
+          Đã bán {{ currentProduct?.soldQuantity }} /
+          <span
+            v-if="currentProduct?.star !== null && !isNaN(currentProduct?.star)"
+          >
+            {{ Math.ceil(currentProduct?.star)
+            }}<template
+              v-for="i in Math.min(parseInt(currentProduct?.star), 5)"
+            >
+              ⭐️
+            </template>
+          </span>
+          <span v-else>No rating</span>
+        </p>
         <ul class="leading-[50px] text-3xl">
-          <li>Giá</li>
-          <li>Số hàng tồn kho</li>
-          <li></li>
+          <li class="font-bold">
+            <span class="line-through text-sm font-extralight"
+              >${{ currentProduct?.oldPrice }}
+            </span>
+            ${{ currentProduct?.newPrice }}
+          </li>
         </ul>
       </div>
       <div class="mx-auto flex flex-col justify-end">
         <div class="number-input">
-          <button
-            onclick="this.parentNode.querySelector('input[type=number]').stepDown()"
-            class="minus"
-          ></button>
+          <button class="minus"></button>
           <input
             class="quantity"
             min="0"
@@ -33,10 +46,7 @@
             value="1"
             type="number"
           />
-          <button
-            onclick="this.parentNode.querySelector('input[type=number]').stepUp()"
-            class="plus"
-          ></button>
+          <button class="plus"></button>
         </div>
         <button class="p-3 bg-sky-500">Mua ngay</button>
       </div>
@@ -55,7 +65,7 @@
             <p>Giá</p>
 
             <button class="p-3 mt-4 bg-sky-500 rounded-lg">
-              <router-link to="/1/details"> Mua ngay </router-link>
+              <router-link to="/products/1"> Mua ngay </router-link>
             </button>
           </div>
         </div>
@@ -64,19 +74,19 @@
   </div>
 </template>
 
-<script>
-export default {
-  data() {
-    return {
-      idPrd: "",
-    };
-  },
-  mounted() {
-    // Lấy tham số từ path
-    this.idPrd = this.$route.params.id;
-    console.log(this.idPrd); // In ra giá trị của userId từ đường dẫn
-  },
-};
+<script setup>
+import { onMounted, ref } from "vue";
+import { getProductApi } from "../api/https";
+import { useRoute } from "vue-router";
+
+const route = useRoute();
+const currentProduct = ref(null);
+
+onMounted(() =>
+  getProductApi(route.params.id).then(
+    ({ data }) => (currentProduct.value = data)
+  )
+);
 </script>
 
 <style>

@@ -1,10 +1,21 @@
 import axios from "axios";
+import { instance } from "./api";
 
-export const getProducts = async () => {
-  try {
-    const res = await axios.get("http://localhost:3000/products");
-    return res.data;
-  } catch (error) {
-    console.log("GET_ERROR", error);
+export const getProductsApi = (title) => {
+  if (title) {
+    return instance.get(`/products?q=${title}`);
+  } else {
+    return instance.get(`/products`);
   }
 };
+
+export const getProductApi = (id) => instance.get(`/products/${id}`);
+
+export const register = (user) => instance.post("/register", user);
+
+export const updateUserAPI = (user) => instance.put(`/users/${user.id}`, user);
+
+export const signin = (user) => instance.post("/signin", user);
+
+export const manaUsers = () => instance.get("/users");
+export const updateUser = (user) => instance.put(`/users/${user.id}`, user);

@@ -25,33 +25,38 @@
           ></path>
         </svg>
       </span>
-      <input
-        class="placeholder:italic w-5/6 placeholder:text-slate-400 block bg-white border border-slate-300 rounded-md py-3 pl-9 pr-3 shadow-sm focus:outline-none focus:border-sky-500 focus:ring-sky-500 focus:ring-1 sm:text-sm"
-        placeholder="Search for anything..."
-        type="text"
-        name="search"
-      />
+      <form action="" @submit.prevent="handleSubmit">
+        <input
+          class="placeholder:italic w-5/6 placeholder:text-slate-400 block bg-white border border-slate-300 rounded-md py-3 pl-9 pr-3 shadow-sm focus:outline-none focus:border-sky-500 focus:ring-sky-500 focus:ring-1 sm:text-sm"
+          placeholder="Search for anything..."
+          type="text"
+          name="search"
+          v-model="searchText"
+        />
 
-      <button
-        class="absolute right-[16%] inset-y-0 before:border-[1px] before:border-gray-500 before:mr-2 hover:bg-cyan-500 hover:text-white after:mx-2 rounded-r-md"
-      >
-        Tìm kiếm
-      </button>
+        <button
+          class="absolute right-[16%] inset-y-0 before:border-[1px] before:border-gray-500 before:mr-2 hover:bg-cyan-500 hover:text-white after:mx-2 rounded-r-md"
+        >
+          Tìm kiếm
+        </button>
+      </form>
     </label>
     <div class="flex-none flex gap-5">
-      <button class="bg-slate-400 p-4 rounded-lg text-white">
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          height="16"
-          width="18"
-          viewBox="0 0 576 512"
-        >
-          <path
-            d="M0 24C0 10.7 10.7 0 24 0H69.5c22 0 41.5 12.8 50.6 32h411c26.3 0 45.5 25 38.6 50.4l-41 152.3c-8.5 31.4-37 53.3-69.5 53.3H170.7l5.4 28.5c2.2 11.3 12.1 19.5 23.6 19.5H488c13.3 0 24 10.7 24 24s-10.7 24-24 24H199.7c-34.6 0-64.3-24.6-70.7-58.5L77.4 54.5c-.7-3.8-4-6.5-7.9-6.5H24C10.7 48 0 37.3 0 24zM128 464a48 48 0 1 1 96 0 48 48 0 1 1 -96 0zm336-48a48 48 0 1 1 0 96 48 48 0 1 1 0-96z"
-          />
-        </svg>
-        Giỏ hàng
-      </button>
+      <router-link to="/cart">
+        <button class="bg-slate-400 p-4 rounded-lg text-white">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            height="16"
+            width="18"
+            viewBox="0 0 576 512"
+          >
+            <path
+              d="M0 24C0 10.7 10.7 0 24 0H69.5c22 0 41.5 12.8 50.6 32h411c26.3 0 45.5 25 38.6 50.4l-41 152.3c-8.5 31.4-37 53.3-69.5 53.3H170.7l5.4 28.5c2.2 11.3 12.1 19.5 23.6 19.5H488c13.3 0 24 10.7 24 24s-10.7 24-24 24H199.7c-34.6 0-64.3-24.6-70.7-58.5L77.4 54.5c-.7-3.8-4-6.5-7.9-6.5H24C10.7 48 0 37.3 0 24zM128 464a48 48 0 1 1 96 0 48 48 0 1 1 -96 0zm336-48a48 48 0 1 1 0 96 48 48 0 1 1 0-96z"
+            />
+          </svg>
+          Giỏ hàng
+        </button>
+      </router-link>
       <button class="p-4 bg-cyan-500 text-white rounded-lg">
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -70,5 +75,15 @@
 </template>
 
 <script setup>
+import { reactive, ref } from "vue";
 import { RouterView } from "vue-router";
+import useProductStore from "../store/products";
+
+const searchText = ref("");
+const store = useProductStore();
+const handleSubmit = async () => {
+  await store.searchProducts(searchText.value).then(() => {
+    searchText.value = "";
+  });
+};
 </script>
