@@ -1,12 +1,11 @@
 <script setup>
 import { computed, onMounted, onUnmounted, ref } from "vue";
-import { getProductsApi } from "../api/https";
 import useProductStore from "../store/products";
-import { useRouter } from "vue-router";
+import { RouterLink, useRouter } from "vue-router";
+
 const store = useProductStore();
 onMounted(() => {
   store.getProducts();
- 
 });
 
 onUnmounted(() => {
@@ -25,20 +24,24 @@ const products = computed(() => {
   <div class="p-3 bg-slate-50">
     <h1>Home Page</h1>
     <div class="grid grid-cols-4 gap-3">
-      <div v-for="item in products" :key="item.id">
-        <router-link :to="`/products/${item.id}`">
+      <div v-for="item in products" class="mb-4" :key="item.id">
+        <RouterLink :to="`/products/${item.id}`">
           <img :src="item.image" width="200" alt="" />
-        </router-link>
+        </RouterLink>
 
         <p class="text-base mt-2">{{ item.name }}</p>
 
-        <span v-if="item?.star !== null && !isNaN(item?.star)">
-          {{ item.soldQuantity }} / {{ Math.ceil(item?.star) }}
-          <template v-for="i in Math.min(parseInt(item?.star), 5)">
-            ⭐️
+        <ul>
+          <template v-for="index in 5">
+            <i
+              v-if="index <= item.star"
+              key="index"
+              class="fa-solid fa-star text-red-600"
+            ></i>
+            <i v-else class="fa-regular fa-star"></i>
           </template>
-        </span>
-        <span v-else>No rating</span>
+          <span>({{ item.soldQuantity }})</span>
+        </ul>
 
         <p class="text-[16px] font-semibold">
           <span class="line-through text-sm font-thin"
@@ -50,7 +53,7 @@ const products = computed(() => {
         <button
           class="p-3 mt-4 bg-sky-500 rounded-lg text-white hover:opacity-60"
         >
-          <router-link :to="'products/' + item.id"> Mua ngay </router-link>
+          <RouterLink :to="'products/' + item.id"> Mua ngay </RouterLink>
         </button>
       </div>
     </div>

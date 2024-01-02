@@ -3,11 +3,10 @@ import { reactive } from "vue";
 import useAuthStore from "../store/auth";
 import { useRouter } from "vue-router";
 import { register } from "../api/https";
+import { toast } from "vue3-toastify";
 
 const authStore = useAuthStore();
 const router = useRouter();
-
-const { login } = authStore;
 
 const userLogin = reactive({
   name: "",
@@ -19,12 +18,12 @@ const userLogin = reactive({
 
 const handleSubmit = async () => {
   const res = await register(userLogin);
-  console.log(res);
-  // if (res.role === "1") {
-  //   await router.push("/");
-  // } else {
-  //   await router.push("/admin");
-  // }
+  await router.push("/signin");
+  toast.success("Login successful", {
+    autoClose: 1500,
+    position: "top-center",
+    theme: "colored",
+  });
 };
 </script>
 

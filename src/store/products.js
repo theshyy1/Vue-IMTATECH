@@ -6,6 +6,7 @@ const useProductStore = defineStore("products", () => {
   const allProducts = ref([]);
   const searchList = ref([]);
   const title = ref("");
+
   const getProducts = async () => {
     const res = await getProductsApi();
     const data = await res.data;

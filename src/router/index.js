@@ -1,4 +1,5 @@
-import { createWebHashHistory, createRouter } from "vue-router";
+import { createWebHistory, createRouter } from "vue-router";
+import useAuthStore from "../store/auth";
 
 const routes = [
   {
@@ -17,6 +18,11 @@ const routes = [
         name: "Search",
         component: () => import("../view/HomePage.vue"),
         meta: { title: "Search" },
+      },
+      {
+        path: "/cart",
+        name: "Cart",
+        component: () => import("../view/Cart.vue"),
       },
       {
         path: "profile",
@@ -48,6 +54,12 @@ const routes = [
         name: "Cart",
         component: () => import("../view/Cart.vue"),
         meta: { title: "Cart" },
+      },
+      {
+        path: "/checkout",
+        name: "Checkout",
+        component: () => import("../view/Checkout.vue"),
+        meta: { title: "Checkout" },
       },
     ],
   },
@@ -101,7 +113,7 @@ const routes = [
 ];
 
 const router = createRouter({
-  history: createWebHashHistory(),
+  history: createWebHistory(),
   routes,
   scrollBehavior: (to, from, savedPosition) => {
     if (savedPosition) {
@@ -110,5 +122,22 @@ const router = createRouter({
       return { top: 0 };
     }
   },
+});
+
+router.beforeEach(async (to, from, next) => {
+  const authStore = useAuthStore();
+  if (!authStore.userState.isLoggin) {
+    if (to.name === "Signup" || to.name === "Signin") {
+      next();
+    } else {
+      next({ name: "Signin" });
+    }
+  } else {
+    if (to.name === "Signup" || to.name === "Signin") {
+      next({ name: from.name });
+    } else {
+      next();
+    }
+  }
 });
 export default router;

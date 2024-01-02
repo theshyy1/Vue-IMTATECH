@@ -1,3 +1,43 @@
+<script setup>
+import { onMounted, ref } from "vue";
+import { getProductApi, updateUserAPI } from "../api/https";
+import { useRoute } from "vue-router";
+import useAuthStore from "../store/auth";
+import { toast } from "vue3-toastify";
+
+const route = useRoute();
+const currentProduct = ref(null);
+const {
+  userState: { user },
+} = useAuthStore();
+
+onMounted(() =>
+  getProductApi(route.params.id).then(
+    ({ data }) => (currentProduct.value = data)
+  )
+);
+
+const quantity = ref(1);
+
+const handleClick = async (product) => {
+  const index = user && user.cart.findIndex((item) => item.id === product.id);
+  console.log(index);
+  if (index !== -1) {
+    user.cart[index].quantity += quantity.value;
+  } else {
+    user.cart.push({ ...product, quantity: quantity.value });
+  }
+
+  const res = await updateUserAPI(user);
+  if (res) {
+    toast.success("Added x1", {
+      autoClose: 1500,
+      position: "bottom-right",
+      theme: "colored",
+    });
+  }
+};
+</script>
 <template>
   <div>
     <div class="flex gap-5 pb-5">
@@ -13,20 +53,21 @@
         <h1 class="text-xl font-semibold pt-5">
           {{ currentProduct?.name }}
         </h1>
-        <p class="text-slate-500">
+        <div class="text-slate-500">
           Đã bán {{ currentProduct?.soldQuantity }} /
-          <span
-            v-if="currentProduct?.star !== null && !isNaN(currentProduct?.star)"
-          >
-            {{ Math.ceil(currentProduct?.star)
-            }}<template
-              v-for="i in Math.min(parseInt(currentProduct?.star), 5)"
-            >
-              ⭐️
+          <ul v-if="currentProduct?.star">
+            <template v-for="index in 5">
+              <i
+                v-if="index <= currentProduct.star"
+                key="index"
+                class="fa-solid fa-star text-red-600"
+              ></i>
+              <i v-else class="fa-regular fa-star"></i>
             </template>
-          </span>
+            <span>({{ currentProduct.soldQuantity }})</span>
+          </ul>
           <span v-else>No rating</span>
-        </p>
+        </div>
         <ul class="leading-[50px] text-3xl">
           <li class="font-bold">
             <span class="line-through text-sm font-extralight"
@@ -38,17 +79,20 @@
       </div>
       <div class="mx-auto flex flex-col justify-end">
         <div class="number-input">
-          <button class="minus"></button>
+          <button class="minus" @click="quantity--"></button>
           <input
             class="quantity"
             min="0"
             name="quantity"
             value="1"
             type="number"
+            v-model="quantity"
           />
-          <button class="plus"></button>
+          <button class="plus" @click="quantity++"></button>
         </div>
-        <button class="p-3 bg-sky-500">Mua ngay</button>
+        <button class="p-3 bg-sky-500" @click="handleClick(currentProduct)">
+          Mua ngay
+        </button>
       </div>
     </div>
     <div class="p-5 m-3 border-t-[2px] border-slate-300">
@@ -74,21 +118,6 @@
   </div>
 </template>
 
-<script setup>
-import { onMounted, ref } from "vue";
-import { getProductApi } from "../api/https";
-import { useRoute } from "vue-router";
-
-const route = useRoute();
-const currentProduct = ref(null);
-
-onMounted(() =>
-  getProductApi(route.params.id).then(
-    ({ data }) => (currentProduct.value = data)
-  )
-);
-</script>
-
 <style>
 input[type="number"] {
   -webkit-appearance: textfield;
@@ -113,7 +142,6 @@ input[type="number"]::-webkit-outer-spin-button {
 
 .number-input button {
   outline: none;
-  -webkit-appearance: none;
   background-color: transparent;
   border: none;
   align-items: center;

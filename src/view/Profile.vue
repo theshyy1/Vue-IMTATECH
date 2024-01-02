@@ -1,16 +1,10 @@
 <script setup>
 import { computed, ref } from "vue";
+import useAuthStore from "../store/auth";
 
-const user = ref({
-  id: 1,
-  name: "Nguyen Van A",
-  birthDay: "18/02/1999",
-  gender: "Male",
-  avatar: "https://picsum.photos/150/150",
-  phone: "0123456789",
-  email: "hoangtrung@gmail.com",
-  address: "Ha Noi, Viet Nam",
-});
+const {
+  userState: { user },
+} = useAuthStore();
 
 const birthday = computed(() =>
   user.birthDay ? user.birthDay.split("-") : ["01", "01", "2000"]

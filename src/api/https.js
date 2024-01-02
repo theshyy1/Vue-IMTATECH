@@ -13,6 +13,9 @@ export const getProductApi = (id) => instance.get(`/products/${id}`);
 
 export const register = (user) => instance.post("/register", user);
 
-export const updateUserAPI = (user) => instance.put(`/users/${user.id}`, user);
+export const updateUserAPI = (user) =>
+  instance.patch(`/users/${user.id}`, user);
 
 export const signin = (user) => instance.post("/signin", user);
+
+export const getUsersAPI = () => instance.get("/users");

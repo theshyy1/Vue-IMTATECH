@@ -1,32 +1,18 @@
 <script setup>
 import { reactive, toDisplayString } from "vue";
 import useAuthStore from "../store/auth";
-import { useRouter } from "vue-router";
-import { toast } from "vue3-toastify";
 
 const authStore = useAuthStore();
-const router = useRouter();
 
 const { login } = authStore;
 
 const userLogin = reactive({
-  email: "",
-  password: "",
+  email: "thanh@gmail.com",
+  password: "anhtrung",
 });
 
 const handleSubmit = async () => {
-  const res = await login(userLogin);
-  console.log(res);
-  if (res.admin === true) {
-    await router.push("/admin");
-  } else {
-    await router.push("/");
-  }
-  toast.success("Login successful", {
-    autoClose: 1500,
-    position: "top-center",
-    theme: "colored",
-  });
+  await login(userLogin);
 };
 </script>
 

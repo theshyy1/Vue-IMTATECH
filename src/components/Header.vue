@@ -1,6 +1,25 @@
+<script setup>
+import { reactive, ref } from "vue";
+import { RouterView, useRouter } from "vue-router";
+import useProductStore from "../store/products";
+
+const store = useProductStore();
+const router = useRouter();
+const handleSubmit = async () => {
+  router.push({
+    path: `/search`,
+    name: "Search",
+    query: { q: store.title },
+  });
+  await store.searchProducts(store.title).then(() => {
+    store.title = "";
+  });
+};
+</script>
+
 <template>
   <div class="p-3 bg-slate-50 flex items-center gap-10">
-    <router-link to="/">
+    <RouterLink to="/">
       <div>
         <img
           src="../assets/tiki-corporation-logo.png"
@@ -9,7 +28,7 @@
           alt=""
         />
       </div>
-    </router-link>
+    </RouterLink>
     <label class="relative block grow ml-32">
       <span class="absolute inset-y-0 left-0 flex items-center pl-2">
         <svg
@@ -43,7 +62,7 @@
       </form>
     </label>
     <div class="flex-none flex gap-5">
-      <router-link to="/cart">
+      <RouterLink to="/cart">
         <button class="bg-slate-400 p-4 rounded-lg text-white">
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -57,7 +76,7 @@
           </svg>
           Giỏ hàng
         </button>
-      </router-link>
+      </RouterLink>
       <button class="p-4 bg-cyan-500 text-white rounded-lg">
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -69,27 +88,15 @@
             d="M224 256A128 128 0 1 0 224 0a128 128 0 1 0 0 256zm-45.7 48C79.8 304 0 383.8 0 482.3C0 498.7 13.3 512 29.7 512H418.3c16.4 0 29.7-13.3 29.7-29.7C448 383.8 368.2 304 269.7 304H178.3z"
           />
         </svg>
-        <router-link to="/">Đăng nhập</router-link>
+
+        <p v-if="userState.isLoggin">
+          Hello,
+          <RouterLink to="/profile">{{ userState.user.name }}</RouterLink>
+        </p>
+        <RouterLink v-else to="/">Đăng nhập</RouterLink>
       </button>
     </div>
   </div>
 </template>
 
-<script setup>
-import { reactive, ref } from "vue";
-import { RouterView, useRouter } from "vue-router";
-import useProductStore from "../store/products";
 
-const store = useProductStore();
-const router = useRouter();
-const handleSubmit = async () => {
-  router.push({
-    path: `/search`,
-    name: "Search",
-    query: { q: store.title },
-  });
-  await store.searchProducts(store.title).then(() => {
-    store.title = "";
-  });
-};
-</script>

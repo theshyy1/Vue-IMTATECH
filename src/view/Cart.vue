@@ -1,143 +1,25 @@
-<<<<<<< HEAD
-<template>
-  <div class="cart">
-    <h2 class="text-xl font-bold">Giỏ hàng</h2>
-    <table class="cart-items">
-      <thead>
-        <tr>
-          <th>Sản phẩm</th>
-          <th>Giá</th>
-          <th>Số lượng</th>
-          <th></th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr class="cart-item">
-          <td>
-            <img src="" alt="Ảnh nè" />
-            <span>Tên sản phẩm</span>
-          </td>
-          <td>$50</td>
-          <td>
-            <input type="number" value="2" />
-          </td>
-          <td>
-            <button class="remove-btn bg-red-500 text-white p-3 rounded-md">
-              Xóa
-            </button>
-          </td>
-        </tr>
-      </tbody>
-    </table>
-    <div class="cart-summary">
-      <p>Tổng tiền: $100</p>
-      <button class="checkout-btn">Thanh toán</button>
-    </div>
-  </div>
-</template>
-
-<style scoped>
-.cart {
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  padding: 20px;
-  width: 100%;
-}
-
-.cart h2 {
-  text-align: center;
-}
-
-.cart-items {
-  width: 100%;
-  border-collapse: collapse;
-  margin-bottom: 20px;
-}
-
-.cart-items th,
-.cart-items td {
-  border-bottom: 1px solid #ccc;
-  padding: 10px;
-  text-align: left;
-}
-
-.cart-items img {
-  width: 50px;
-  height: 50px;
-  vertical-align: middle;
-  margin-right: 10px;
-}
-
-.cart-summary {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.checkout-btn {
-  padding: 10px 20px;
-  background-color: #55bbff;
-  color: white;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-}
-</style>
-=======
 <script setup>
 import { computed, ref } from "vue";
-import { useAuthStore } from "../store/auth";
-import { updateUserAPI } from "../api/https";
 import { toast } from "vue3-toastify";
 import { RouterLink } from "vue-router";
+import { updateUserAPI } from "../api/https";
+import useAuthStore from "../store/auth";
 
 const {
   userState: { user },
 } = useAuthStore();
-
-// Discount price
-// const codeDiscount = ref("");
-// const shipPrice = ref(user.cart.length * 20);
-// const payFee = ref(shipPrice.value);
-
-// const getDiscount = computed(() => {
-//   let discount = 0;
-//   switch (codeDiscount.value) {
-//     case "hoangtrung":
-//       discount = 1;
-//       break;
-//     case "trung":
-//       discount = 0.5;
-//       break;
-//     case "manh":
-//       discount = 0.4;
-//       break;
-//     case "quynh":
-//       discount = 0.3;
-//       break;
-//     default:
-//       discount = 0;
-//   }
-//   return shipPrice.value * discount;
-// });
-
-// function getPriceDiscount() {
-//   const x = computed(() => shipPrice.value - getDiscount.value);
-//   payFee.value = x.value;
-// }
-
-// // Total price items
-// const totalPriceItems = computed(() => {
-//   const total = user.cart.reduce(
-//     (total, num) => total + (num.quantity ? num.quantity : 1) * num.newPrice,
-//     0
-//   );
-//   return total;
-// });
+// Total price items
+const totalPriceItems = computed(() => {
+  const total = user.cart.reduce(
+    (total, num) => total + (num.quantity ? num.quantity : 1) * num.newPrice,
+    0
+  );
+  return total;
+});
 
 // Handle quantity
 const handleDecrease = async (product) => {
-  const index = user.cart.findIndex((item) => item._id == product._id);
+  const index = user.cart.findIndex((item) => item.id == product.id);
 
   if (user.cart[index].quantity > 1) {
     user.cart[index].quantity--;
@@ -164,7 +46,7 @@ const handleDecrease = async (product) => {
 };
 
 const handleIncrease = async (product) => {
-  const index = user.cart.findIndex((item) => item._id == product._id);
+  const index = user.cart.findIndex((item) => item.id == product.id);
   user.cart[index].quantity++;
   await updateUserAPI(user);
   toast.success("Added +1", {
@@ -200,7 +82,7 @@ const removeItem = async (product) => {
     <div class="">
       <ul
         v-for="cart in user.cart"
-        :key="cart._id"
+        :key="cart.id"
         class="relative border-[1px] shadow-md border-neutral-400 grid grid-cols-4 justify-between text-center items-center py-3 my-[30px]"
       >
         <li class="flex items-center justify-center">
@@ -246,8 +128,6 @@ const removeItem = async (product) => {
           type="text"
           placeholder="Coupon Code"
           class="w-[300px] text-sm text-black py-4 px-5 border-[1px] border-neutral-300 rounded"
-          v-model="codeDiscount"
-          @keyup.enter="getPriceDiscount"
         />
         <button
           class="w-[210px] py-4 ml-4 bg-orange-500 border-none text-white rounded hover:opacity-60"
@@ -268,13 +148,13 @@ const removeItem = async (product) => {
               class="flex justify-between border-[1px] border-neutral-300 py-1 px-2 mb-4"
             >
               Shipping:
-              <span>{{ payFee === 0 ? "Free" : `$ ${payFee}` }}</span>
+              <span>Free</span>
             </p>
             <p
               class="flex justify-between border-[1px] border-neutral-300 py-1 px-2 mb-4"
             >
               Total:
-              <span class="totalPrice">$ {{ totalPriceItems + payFee }}</span>
+              <span class="totalPrice">$ {{ totalPriceItems }}</span>
             </p>
           </div>
           <RouterLink to="/checkout">
@@ -290,4 +170,3 @@ const removeItem = async (product) => {
     </div>
   </div>
 </template>
->>>>>>> e9db97252acac3301b34b8cbb2fad217d1a71b95
